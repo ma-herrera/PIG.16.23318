@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/windows,python,django,linux,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,python,django,linux,macos
 
+### custom files ###
+templates/gym/carousel.html
+templates/gym/car2.html
+
 ### Django ###
 *.log
 *.pot
