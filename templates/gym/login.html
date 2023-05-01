@@ -1,0 +1,12 @@
+{% extends './base.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block contenido %}
+<form action="/singup/" method="POST">
+     {% csrf_token %} 
+     {{form.as_p}}
+
+    <button> Loguearse </button>
+
+</form>
+{% endblock contenido %}
