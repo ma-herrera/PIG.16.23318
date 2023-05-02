@@ -9,6 +9,12 @@
 
     <title>{% block title %}Gym{% endblock title %}</title>
 
+    {% block headFonts %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&family=Noto+Sans:wght@300&family=Roboto&display=swap" rel="stylesheet">
+    {% endblock headFonts %}
+
     {% block headStyles %}{% endblock headStyles %}
     
     {% block headStaticContent %}
