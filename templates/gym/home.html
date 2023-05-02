@@ -2,6 +2,7 @@
 {% block title %}{{title}}{% endblock title %}
 
 {% block headStyles %}
+<!-- Si no se usan las tarjetas y los circulos para imagenes eliminar los estilos -->
 <style>
   .bd-placeholder-img {
     font-size: 1.125rem;
@@ -21,7 +22,7 @@
 
 {% block headStaticContent %}
     {% load static %}
-    <link href="{% static '/gym/carousel.css'%}" rel="stylesheet">
+    <link href="{% static '/gym/css/home.css'%}" rel="stylesheet">
 {% endblock headStaticContent %}
 
 <!-- BODY -->
