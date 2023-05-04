@@ -15,14 +15,20 @@ def home(request):
 
 def contacto(request):
     mensaje=None
-    if(request.method=='POST'):
+    if(request.method=='GET'):
+        contacto_form = ContactoForm()
+        return render(request,'gym/contact.html',{
+            'contacto_form': contacto_form
+        })
+
+    else:
         contacto_form= ContactoForm(request.POST)
         if(contacto_form.is_valid()):  
-            messages.success(request,'Hemos recibido tus datos')  
+            messages.success(request,'¡Mensaje enviado con éxito, responderemos a la brevedad!')  
+            contacto_form = ContactoForm()
         else:
-            messages.warning(request,'Por favor revisa los errores en el formulario')
-    else:
-        contacto_form = ContactoForm()
+            messages.warning(request,'Por favor verificá los errores marcados antes de enviar')
+    
     return render(request,'gym/contact.html',{
                     'mensaje': mensaje,
                     'contacto_form': contacto_form})
