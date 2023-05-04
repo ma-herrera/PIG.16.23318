@@ -16,10 +16,13 @@
     {% endblock headFonts %}
 
     {% block headStyles %}{% endblock headStyles %}
-    
+    {% load static %}
     {% block headStaticContent %}
-        {% load static %}
     {% endblock headStaticContent %}
+    <!--Favicon-->
+    <!-- <link rel="shortcut icon" href="{% static '/img/PFBR.svg'%}" type="image/x-icon"> -->
+    <link rel="shortcut icon" href="{% static '/img/Po.svg'%}" type="image/x-icon">
+
 </head>
 
 

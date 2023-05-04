@@ -1,5 +1,14 @@
 /* GLOBAL STYLES
 -------------------------------------------------- */
+/* body {
+  font-family: 'Noto Sans', sans-serif;
+} */
+
+h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
 /* Padding below the footer and lighter body text */
 
 body {
