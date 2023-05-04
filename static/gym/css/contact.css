@@ -1,0 +1,21 @@
+/* main{
+    background-image: url('/static/img/natacion-1900-1260-300px-oscura.jpg');
+    background-size:contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+} */
+
+main{
+    background-color: rgb(24, 16, 7);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.contacto{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+} 
