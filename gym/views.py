@@ -34,15 +34,9 @@ def contacto(request):
                     'contacto_form': contacto_form})
 
 
-def loguearse(request):
-   
-    return render(request, 'gym/contact.html',{
-        'form': UserCreationForm
-    })
 
-
-def sing_up(request):
-    template = loader.get_template("gym/sing_up.html")
-    context = {"title": "Sing Up"}
-    return HttpResponse(template.render(context, request))
+# def sing_up(request):
+#     template = loader.get_template("gym/sing_up.html")
+#     context = {"title": "Sing Up"}
+#     return HttpResponse(template.render(context, request))
 
