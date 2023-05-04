@@ -27,12 +27,17 @@
             <a class="nav-link" href= "{% url 'contacto' %}" tabindex="-1" aria-disabled="true">Contacto</a>
           </li>
         </ul>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-          Sumarse!
-        </button>
-        <button type="button" class="btn btn-primary">Iniciar sesión</button>
-
+        <div class="col-md-3 text-end">
+          <button type="button" class="btn btn-outline-primary me-2">Iniciar Sesión</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Sumarse!
+          </button>
+        </div>
+          
+         {% include './sing_up.html' %}
+        
       </div>
     </div>
   </nav>
 </header>
+
