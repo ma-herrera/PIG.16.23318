@@ -3,7 +3,7 @@ from django.forms import ValidationError
 
 def solo_caracteres(value):
     if any(char.isdigit() for char in value):
-        raise ValidationError('El nombre no puede contener números. %(valor)s',
+        raise ValidationError('El nombre  %(valor)s no debe contener números.',
                             code='Invalid',
                             params={'valor':value})
 
@@ -18,7 +18,8 @@ class ContactoForm(forms.Form):
             label='Email',
             max_length=100,
             error_messages={
-                    'required': 'Por favor completa el campo'
+                    'required': 'Por favor completa el campo',
+                    'invalid': 'Ingresa un correo válido, ej.: juan@gmail.com'
                 },
             widget=forms.TextInput(attrs={'class':'form-control','type':'email','placeholder':'Ingrese su email'})
         )
@@ -38,13 +39,4 @@ class ContactoForm(forms.Form):
         if len(data) < 10:
             raise ValidationError("Debes especificar mejor el mensaje que nos envias")
         return data
-
-    def clean(self):
-        cleaned_data = super().clean()
-        asunto = cleaned_data.get("asunto")
-        suscripcion = cleaned_data.get("suscripcion")
-
-        if suscripcion and asunto and "suscripcion" not in asunto:
-            msg = "Debe agregar la palabara 'suscripcion' al asunto."
-            self.add_error('asunto', msg)
 

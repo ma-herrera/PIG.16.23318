@@ -1,7 +1,7 @@
 
 (() => {
     'use strict'
-  
+    
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     const forms = document.querySelectorAll('.needs-validation')
   
@@ -14,6 +14,14 @@
         }
   
         form.classList.add('was-validated')
+        setTimeout(function() {
+          var successMessage = document.getElementById('success-message');
+          if (successMessage) {
+            successMessage.remove();
+          }
+        }, 2000);
+     
       }, false)
     })
-  })()
+ 
+  })();

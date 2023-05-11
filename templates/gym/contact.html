@@ -1,49 +1,67 @@
 {% extends './base.html' %}
 {% load static %}
-{% block title %}{{title}}{% endblock title %}
+{% block title %}Contacto{% endblock title %}
+
+{% block headerContent %}
+    {% include './header.html' %}
+    <link rel="stylesheet" href="{% static 'gym/css/contact.css' %}">
+{% endblock headerContent %}
 
 {% block contenido %}
-<div class="container col-md-6 mb-md-0 mb-6">
-    <div class="row vh-auto justify-content-center">
-        <div class="col-auto bg-light p-4">
-            <p class="fs-4 fw-bold">Contacto</p>
+<main class="container">
+<div class="container col-md-6 mb-md-0 mb-6 ">
+    <div class="row vh-auto justify-content-center ">
+        <div class="rounded col-auto bg-light p-4">
+            <div class="contacto">
+                <p class="fs-4 fw-bold">Contacto</p>
+                <img src="{% static '/img/powerfullGymLogo-RedAndBlack-Full.png' %}" width=75 alt="logo">
+            </div>
+           
          {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}" role="alert">
+        <div class="alert alert-{{ message.tags }}" role="alert" id="success-message">
             {{message}}
         </div>
           {% endfor %}
-            
-        
+
         <form class="needs-validation" novalidate id="contact-form" name="contact-form" action="{% url 'contacto' %}" method="POST">
               {% csrf_token %}
             
-            
-        <div class="row">
+        <div class="row form-group">
             {% for campo in contacto_form %}
-            <!--Grid column-->
+            
             <div class="col-md-12">
                 <div class="md-form mb-0">
                     <label for="name" class="">{{ campo.label }}</label>
                     {{campo}}
+
+                    <div class="invalid-feedback">
+                        {% if campo.label == 'Email' %}
+                        Por favor ingresa una casilla de correo válida
+                        {% else %}
+                        Por favor completa este campo con tu {{campo.label | lower}}
+                        {% endif %}
+                        
+                    </div>
                 </div>
-              
-                   
-                <div>{{campo.errors}}</div>
+                 <div>
+                    {{campo.errors}}
+                </div> 
             </div>
-            <!--Grid column-->
+            
             {% endfor %}
         </div>
         
         <div class="text-center text-md-left mt-3">
-            <button class="btn btn-warning" type="submit">Enviar</button>
+            <button class="btn btn-danger" type="submit">Enviar</button>
         </div>
     </form>
 
-    <div class="status"></div>
-    </div>
+     <div class="status"></div>
+    </div> 
 </div>
 
 </div>
+</main>
 <script src={% static 'gym/js/sing_up.js' %}></script>
 {% endblock contenido %}
 
