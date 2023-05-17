@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 import environ
 
+
 env = environ.Env()
 environ.Env.read_env()
 
@@ -90,12 +91,6 @@ DATABASES = {
         'PORT': env("DATABASE_PORT"),
     }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
