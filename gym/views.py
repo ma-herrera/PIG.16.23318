@@ -35,6 +35,11 @@ def contacto(request):
 
 
 
+def actividades(request):
+    return render(request, 'gym/actividades.html')
+
+
+
 # def sing_up(request):
 #     template = loader.get_template("gym/sing_up.html")
 #     context = {"title": "Sing Up"}
