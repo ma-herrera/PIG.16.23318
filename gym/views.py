@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from gym.forms import ContactoForm
+
+from .forms_registro import RegistroForm
+
 
 # Create your views here.
 def home(request):
@@ -35,8 +38,16 @@ def contacto(request):
 
 
 
-# def sing_up(request):
-#     template = loader.get_template("gym/sing_up.html")
-#     context = {"title": "Sing Up"}
-#     return HttpResponse(template.render(context, request))
+########### prueba de formulario de registro
 
+def registro(request):
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('inicio')  
+    else:
+        form = RegistroForm()
+    
+    return render(request, 'register.html', {'form': form})
+    
