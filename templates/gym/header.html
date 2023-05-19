@@ -20,7 +20,7 @@
             <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Actividades</a>
+            <a class="nav-link" href="{% url 'actividades' %}">Actividades</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Conocenos</a>
@@ -29,7 +29,7 @@
             <a class="nav-link" href= "{% url 'contacto' %}" tabindex="-1" aria-disabled="true">Contacto</a>
           </li>
         </ul>
-        <div class="col-md-3 text-end">
+        <div class="col-md-5 text-end">
           <button type="button" class="btn btn-outline-primary me-2">Iniciar Sesión</button>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
             Sumarse!

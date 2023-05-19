@@ -38,6 +38,16 @@ def contacto(request):
 
 
 
+def actividades(request):
+    return render(request, 'gym/actividades.html')
+
+
+
+def actividades(request):
+    return render(request, 'gym/actividades.html')
+
+
+
 ########### prueba de formulario de registro
 
 def registro(request):

@@ -1,0 +1,22 @@
+{% extends './base.html' %}
+{% block title %}{{title}}{% endblock title %}
+{% load static %}
+
+{% block headStyles %}
+{% endblock headStyles %}
+
+{% load static %}
+    <link rel="stylesheet" href="{% static '/gym/css/home.css' %}"/>
+
+<!-- BODY -->
+{% block headerContent %}
+    {% include './header.html' %}
+{% endblock headerContent %}
+
+{% block contenido %}
+{% endblock contenido %}
+
+
+{% block footerContent %}
+    {% include './footer.html' %}
+{% endblock footerContent %}
