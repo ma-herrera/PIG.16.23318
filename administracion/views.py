@@ -50,7 +50,7 @@ def tipo_de_actividad_editar(request, id_tipo_de_actividad):
             return redirect('tipo_de_actividad_index')
     else:
         formulario = TipoDeActividadForm(instance=tipo_de_actividad)
-    return render(request,'administracion/tipo_de_actividad/editar.html',{'form':formulario})
+    return render(request,'administracion/tipo_de_actividad/editar.html',{'formulario':formulario})
 
 #Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
 def tipo_de_actividad_eliminar(request,id_tipo_de_actividad):
@@ -60,5 +60,5 @@ def tipo_de_actividad_eliminar(request,id_tipo_de_actividad):
         # return render(request,'administracion/404_admin.html')
         Warning("Tipo de actividad no encontrado")
         return redirect('tipo_de_actividad_index')
-    # tipo_de_actividad.soft_delete()
+    tipo_de_actividad.delete()
     return redirect('tipo_de_actividad_index')

@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from gym.forms import ContactoForm
 
-from .forms_registro import RegistroForm
+# from .forms_registro import RegistroForm
 
 
 # Create your views here.
@@ -50,14 +50,14 @@ def actividades(request):
 
 ########### prueba de formulario de registro
 
-def registro(request):
-    if request.method == 'POST':
-        form = RegistroForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('inicio')  
-    else:
-        form = RegistroForm()
+# def registro(request):
+#     if request.method == 'POST':
+#         form = RegistroForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('inicio')  
+#     else:
+#         form = RegistroForm()
     
-    return render(request, 'register.html', {'form': form})
+#     return render(request, 'register.html', {'form': form})
     
