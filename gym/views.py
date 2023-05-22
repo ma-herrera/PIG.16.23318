@@ -1,10 +1,12 @@
 from django.shortcuts import render,redirect
+from django.core import serializers
 
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from gym.forms import ContactoForm
+from administracion.models import TipoDeActividad
 
 # from .forms_registro import RegistroForm
 
@@ -48,16 +50,9 @@ def actividades(request):
 
 
 
-########### prueba de formulario de registro
-
-# def registro(request):
-#     if request.method == 'POST':
-#         form = RegistroForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('inicio')  
-#     else:
-#         form = RegistroForm()
-    
-#     return render(request, 'register.html', {'form': form})
-    
+def get_actividades_json (request):
+    lista_de_actividades = TipoDeActividad.objects.all()
+    lista_json = serializers.serialize("json", lista_de_actividades)
+    dict_json = '{"lista":' + lista_json + '}'
+    # return HttpResponse(lista_json)
+    return HttpResponse(dict_json)
