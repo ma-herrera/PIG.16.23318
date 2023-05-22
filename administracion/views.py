@@ -19,7 +19,13 @@ def home_administracion(request):
 def tipo_de_actividad_index(request):
     #queryset
     # tipo_de_actividad = TipoDeActividad.objects.filter(baja=False)
-    qs_tipos_de_actividad = TipoDeActividad.objects.all
+
+    snombre = request.GET["nombre"]
+    if snombre != "":
+        qs_tipos_de_actividad = TipoDeActividad.objects.filter(nombre=snombre)
+    else:
+        qs_tipos_de_actividad = TipoDeActividad.objects.all
+
     return render(request,'administracion/tipo_de_actividad/index.html',{'qs_tipos_de_actividad':qs_tipos_de_actividad})
 
 #usa el formulario del modelo
@@ -62,3 +68,7 @@ def tipo_de_actividad_eliminar(request,id_tipo_de_actividad):
         return redirect('tipo_de_actividad_index')
     tipo_de_actividad.delete()
     return redirect('tipo_de_actividad_index')
+
+
+def tipo_de_actividad_buscar(request):
+    return render(request, "administracion/tipo_de_actividad/buscar.html")
