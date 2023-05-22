@@ -24,10 +24,12 @@ const armarCard = (activity, order) => {
     div_featurette.classList.toggle("row");
     div_featurette.classList.toggle("featurette");
     console.log("order", order)
+    // La imagen se alinea a izquierda o derecha alternativamente
     if (order==1) {
         html = `<div class="col-md-7">
                     <h2 class="featurette-heading">${activity["titulo"]}. <span class="text-muted">${activity["subtitulo"]}.</span></h2>
                     <p class="lead">${activity["descripcion"]}</p>
+                    <p><a class="btn btn-lg btn-outline-primary" href="/contacto/">Conocer más</a></p>
                 </div>
                 <div class="col-md-5">
                     <img src="../media/${activity["imagen_de_portada"]}" class="bd-placeholder-img bd-placeholder-img-lg img-fluid float-start mx-auto" width="500" height="500"  alt=imagen de ${activity["titulo"]}>
@@ -37,6 +39,7 @@ const armarCard = (activity, order) => {
         html = `<div class="col-md-7 order-md-2">
                 <h2 class="featurette-heading">${activity["titulo"]}. <span class="text-muted">${activity["subtitulo"]}.</span></h2>
                 <p class="lead">${activity["descripcion"]}</p>
+                <p><a class="btn btn-lg btn-outline-primary" href="/contacto/">Conocer más</a></p>
             </div>
             <div class="col-md-5 order-md-1">
                 <img src="../media/${activity["imagen_de_portada"]}" class="bd-placeholder-img bd-placeholder-img-lg img-fluid float-start mx-auto" width="500" height="500"  alt=imagen de ${activity["titulo"]}>
