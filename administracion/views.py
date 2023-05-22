@@ -20,8 +20,8 @@ def tipo_de_actividad_index(request):
     #queryset
     # tipo_de_actividad = TipoDeActividad.objects.filter(baja=False)
 
-    snombre = request.GET["nombre"]
-    if snombre != "":
+    if request.GET:
+        snombre = request.GET['nombre']
         qs_tipos_de_actividad = TipoDeActividad.objects.filter(nombre=snombre)
     else:
         qs_tipos_de_actividad = TipoDeActividad.objects.all
