@@ -36,6 +36,9 @@ class TipoDeActividad(models.Model):
         """
         return self.nombre
     
+    def delete(self,using=None,keep_parents=False):
+        self.imagen_de_portada.storage.delete(self.imagen_de_portada.name) #borrado fisico
+        super().delete()
     #################################################################################
 
 class TipoDocumento(models.Model):
