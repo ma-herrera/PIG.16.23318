@@ -76,7 +76,7 @@ class Persona (models.Model):
         """
         Cadena para representar el objeto Persona (en el sitio de Admin, etc.)
         """
-        return self.nombre + " " + self.apellido + ", " + self.tipoDocumento + ": " + self.tipoDocumento + ", " + self.email
+        return 'nombre: {}, apellido: {}, tipo de documento: {}, email: {}'.format(self.nombre, self.apellido, self.tipoDocumento.descripcion, self.email)
 
     class Meta:
         abstract = True
@@ -88,7 +88,7 @@ class Profesor(Persona):
     fechaBaja = models.DateField(null=True, blank=True, verbose_name="Fecha de baja")
 
     def __str__(self):
-        return super().__str__() + ", CUIL: " + self.cuil + ", fecha de alta: " + self.fechaAlta
+        return "{}, fecha de alta: {}".format(super().__str__(), self.fechaAlta)
 
     class Meta:
         verbose_name = "profesor"
@@ -104,7 +104,7 @@ class Cliente(Persona):
     aptoFisico = models.BooleanField(verbose_name="Apto físico", help_text="Presenta apto físico? S/N")
 
     def __str__(self):
-        return super().__str__() + ", pase libre: " + self.paseLibre + ", fecha de alta: " + self.fechaAlta
+        return "{}, pase libre: {}, fecha de alta: {}".format(super().__str__(), self.paseLibre, self.fechaAlta)
 
     class Meta:
         verbose_name = "cliente"
@@ -127,7 +127,8 @@ class Actividad(models.Model):
         )
 
     def __str__(self):
-        return self.tipoDeActividad + ", tarifa: " + self.tarifa + ", fecha de inicio: " + self.fechaDeInicio + ", cupo: " + self.cupo + ", profesor: " + self.profesor
+        # return self.tipoDeActividad + ", tarifa: " + self.tarifa + ", fecha de inicio: " + self.fechaDeInicio + ", cupo: " + self.cupo + ", profesor: " + self.profesor
+        return ("{} {}, fecha de inicio: {} cupo: {}, profesor: {}".format(self.tipoDeActividad.pk, self.tipoDeActividad, self.fechaDeInicio, self.cupo, self.profesor))
 
     class Meta:
         verbose_name = "actividad"
@@ -143,7 +144,7 @@ class Inscripcion(models.Model):
     bonificacion = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="porcentaje de bonificación sobe la cuota mensual", help_text="porcentaje de bonificación sobe la cuota mensual")
 
     def __str__(self):
-        return self.actividad.tipoDeActividad + self.actividad + ", cliente: " + self.cliente + ", fecha de inscripción: " + self.fechaDeInscripcion + ", bonificación: " + self.bonificacion
+        return ("actividad: {}, cliente: {}, fecha de inscripcion: {}, bonificación: {}".format(self.actividad.tipoDeActividad.nombre, self.cliente, self.fechaDeInscripcion, self.bonificacion))
 
     class Meta:
         constraints = [
@@ -170,7 +171,7 @@ class Horario(models.Model):
     horaInicio = models.TimeField(verbose_name="hora de inicio de la clase")
     horaFin = models.TimeField(verbose_name="hora de finalización de la clase")
     def __str__(self):
-        return self.actividad.tipoDeActividad + self.actividad + ", día: " + self.dia + ", hora de inicio: " + self.horaInicio + ", hora de finalización: " + self.horaFin
+        return ("actividad: {}, día: {}, hora de inicio: {}, hora de fin: {}".format(self.actividad.tipoDeActividad.nombre, self.dia, self.horaInicio,self.horaFin))
 
     class Meta:
         verbose_name = "horario"
