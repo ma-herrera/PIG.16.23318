@@ -1,0 +1,23 @@
+{% extends 'gym/base.html' %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block contenido %}
+<form action="" method="POST">
+     {% csrf_token %} 
+     {% if messages %}
+
+     {% for message in messages%}
+     
+     <span class="alert alert-{{message.tags}}">{{message}}</span> 
+     {% endfor %}
+
+     {% endif %}
+     <br>
+     {{form.as_p}}
+
+    <button type="submit" class="btn btn-danger"> Loguearse </button>
+
+</form>
+<div class="modal fade" id="login" role="dialog">
+</div>
+{% endblock contenido %}
