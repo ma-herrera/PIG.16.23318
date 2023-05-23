@@ -17,6 +17,7 @@ from .form_autenticacion import FormularioLogin, FormularioUsuario
 from usuario.models import Usuario
 from usuario.mixin import LoginYSuperUsuarioMixin
 
+
 class Registro(View):
 
     def get(self,request):
@@ -115,3 +116,16 @@ class RegistrarUsuario(CreateView):
         else: 
             return render(request, self.template_name, {'form':form})
         
+class EliminarUsuario(LoginYSuperUsuarioMixin, DeleteView):
+    model = Usuario
+    template_name = 'usuario/eliminar_usuario.html'
+    success_url = reverse_lazy('listar_usuarios')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.soft_delete()  
+        return HttpResponseRedirect(self.get_success_url())
+    
+   
+    
+   
