@@ -41,7 +41,7 @@
 <br>
 <div class="card">
     <div class="card-body">
-        <a name="" id="" class="btn btn-success" href="{% url 'tipo_de_actividad_nuevo' %}" role="button"> <i class="fa-solid fa-circle-plus"></i>Nuevo</a>
+        <a name="" id="" class="btn btn-success" href="{% url 'tipo_de_actividad_nuevo_view' %}" role="button"> <i class="fa-solid fa-circle-plus"></i>Nuevo</a>
         <!-- bs5-table-defaul -->
         <table class="table">
          <!-- class="table"> -->
@@ -58,8 +58,8 @@
                         <td>{{tipo_de_actividad.id}}</td>
                         <td>{{tipo_de_actividad.nombre}}</td>
                         <td>
-                            <a href="{% url 'tipo_de_actividad_editar' tipo_de_actividad.id %}" title="Editar" class="btn btn-warning">Editar<i class="fas fa-pencil"></i></a>
-                            <a href="{% url 'tipo_de_actividad_eliminar' tipo_de_actividad.id %}" title="Eliminar" class="btn btn-danger">Eliminar<i class="fas fa-trash"></i></a>
+                            <a href="{% url 'tipo_de_actividad_editar_view' tipo_de_actividad.id %}" title="Editar" class="btn btn-warning">Editar<i class="fas fa-pencil"></i></a>
+                            <a href="{% url 'tipo_de_actividad_eliminar_view' tipo_de_actividad.id %}" title="Eliminar" class="btn btn-danger">Eliminar<i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 {% endfor %}
