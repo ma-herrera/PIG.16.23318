@@ -171,9 +171,8 @@ class Horario(models.Model):
     horaInicio = models.TimeField(verbose_name="hora de inicio de la clase")
     horaFin = models.TimeField(verbose_name="hora de finalización de la clase")
     def __str__(self):
-        return ("actividad: {}, día: {}, hora de inicio: {}, hora de fin: {}".format(self.actividad.tipoDeActividad.nombre, self.dia, self.horaInicio,self.horaFin))
+        return ("{}, {}, {} a {}".format(self.actividad.tipoDeActividad.nombre, self.dia, self.horaInicio,self.horaFin))
 
     class Meta:
         verbose_name = "horario"
         verbose_name_plural = "horarios"
-    
