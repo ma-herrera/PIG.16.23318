@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.http import HttpResponseForbidden
 
 
 class LoginYSuperUsuarioMixin(object):
@@ -8,3 +9,15 @@ class LoginYSuperUsuarioMixin(object):
             if request.user.is_staff:
                  return super().dispatch(request, *args, **kwargs)
         return redirect('home')
+
+
+def has_permission(function):
+    def wrap(request, *args, **kwargs):
+        # agregar tu lógica de verificación de permisos
+        # Por ejemplo, si solo los usuarios autenticados pueden acceder:
+        if request.user.is_authenticated:
+            if request.user.is_staff:
+                 return function(request, *args, **kwargs)
+        else:
+           return redirect('home')
+    return wrap
