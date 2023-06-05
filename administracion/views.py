@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from administracion.forms import TipoDeActividadForm
-from administracion.models import TipoDeActividad, Horario, Actividadfrom 
+from administracion.models import TipoDeActividad
 from usuario.mixin import has_permission
 
 from django.contrib import messages

@@ -1,13 +1,18 @@
-{% extends 'gym/base.html' %}
+{% extends 'administracion/base_administracion.html' %}
 {% block title %}{{title}}{% endblock title %}
 
 {% block contenido %}
-
+<br><br><br>
+<h1 class="mt-4">Lista de usuarios</h1>
+<div class="card">
+{% include 'administracion/tipo_de_actividad/buscar.html' %}
+</div>
+<br>
 {% if object_list %}
 
 <div class="card">
     <div class="card-header">
-        <div class="card-title">Listado de usuarios</div>
+        <div class="card-title">Usuarios</div>
     </div>
     <div class="table-stats order-table ov-h">
         <table class="table">
@@ -17,19 +22,23 @@
                     <th>Username</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
+                    <th>Documento</th>
+                    <th>Email</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {% for usuario in object_list %}
                 <tr>
-                    <td>{{ usuario.id}}</td>
+                    <td>{{usuario.id}}</td>
                     <td>{{usuario.username}}</td>
                     <td>{{usuario.nombre}}</td>
                     <td>{{usuario.apellido}}</td>
+                    <td>{{usuario.documento}}</td>
+                    <td>{{usuario.email}}</td>
                     <td>
+                        <a href="" class="btn btn-warning">Editar</a>
                         <a href="" class="btn btn-danger">Eliminar</a>
-                        <a href="" class="btn btn-danger">Editar</a>
                     </td>
                 </tr>
                 {% endfor %}

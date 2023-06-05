@@ -18,23 +18,32 @@ from usuario.models import Usuario
 from usuario.mixin import LoginYSuperUsuarioMixin
 
 
-class Registro(View):
+class RegistrarUsuario(CreateView):
+    model = Usuario
+    form_class= FormularioUsuario
+    template_name = 'usuario/registrar_usuario.html'
+    success_url = reverse_lazy('home')
 
-    def get(self,request):
-        form=UserCreationForm()
-        return render(request, "usuario/sign_up.html",{"form":form})
-
-
-    def post(self,request):
-        form=UserCreationForm(request.POST)
+    def post(self,request,*args, **kwargs):
+        form= self.form_class(request.POST)
+        print("entro a registro")
+        
         if form.is_valid():
-            usuario=form.save()
-            login(request, usuario)
+            print("formulario valido")
+            nuevo_usuario=Usuario(
+                email = form.cleaned_data.get('email'),
+                username = form.cleaned_data.get('username'),
+                nombre = form.cleaned_data.get('nombre'),
+                apellido = form.cleaned_data.get('apellido'),
+                documento = form.cleaned_data.get('documento')
+            )
+            nuevo_usuario.set_password(form.cleaned_data.get('password1'))
+            print("guarda el usuario")
+            nuevo_usuario.save()
             return redirect('home')
-        else:
-            for msg in form.error_messages:
-                messages.error(request, form.error_messages[msg])
-        return render(request, "usuario/sign_up.html",{"form":form})
+        else: 
+            print("no es valido")
+            return render(request, self.template_name, {'form':form})
 
 
 def cerrar_sesion(request):
@@ -63,7 +72,7 @@ def loguear(request):
 #login personalizado
 
 class Login(FormView):
-    template_name ='login.html'
+    template_name ='usuario/login.html'
     form_class = FormularioLogin
     success_url = reverse_lazy('home')
 
@@ -75,16 +84,15 @@ class Login(FormView):
         else:
 
             return super(Login.self).dispatch(request,*args,**kwargs)
-        
+    print("entro a login")    
     def form_valid(self,form):
+        print("formulario login valido")
         login(self.request, form.get_user())
         return super(Login,self).form_valid(form)
     
 def logoutUsuario(request):
     logout(request)
     return HttpResponseRedirect('home')
-
-
 
 
 class ListadoUsuario(LoginYSuperUsuarioMixin, ListView):
@@ -94,28 +102,6 @@ class ListadoUsuario(LoginYSuperUsuarioMixin, ListView):
     def get_queryset(self):
         return self.model.objects.filter(usuario_activo=True)
   
-class RegistrarUsuario(CreateView):
-    model = Usuario
-    form_class= FormularioUsuario
-    template_name = 'usuario/registrar_usuario.html'
-    success_url = reverse_lazy('home')
-
-    def post(self,request,*args, **kwargs):
-        form= self.form_class(request.POST)
-        if form.is_valid():
-            nuevo_usuario=Usuario(
-                email = form.cleaned_data.get('email'),
-                username = form.cleaned_data.get('username'),
-                nombre = form.cleaned_data.get('nombre'),
-                apellido = form.cleaned_data.get('apellido'),
-                documento = form.cleaned_data.get('documento')
-            )
-            nuevo_usuario.set_password(form.cleaned_data.get('password1'))
-            nuevo_usuario.save()
-            return redirect('home')
-        else: 
-            return render(request, self.template_name, {'form':form})
-        
 class EliminarUsuario(LoginYSuperUsuarioMixin, DeleteView):
     model = Usuario
     template_name = 'usuario/eliminar_usuario.html'
