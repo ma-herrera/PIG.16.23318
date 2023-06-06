@@ -18,9 +18,11 @@ from django.urls import path
 from django.urls.conf import include
 from django.conf import settings
 from django.conf.urls.static import static
+from administracion.admin import sitio_admin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admingym/', sitio_admin.urls),
     path('',include('gym.urls')),
     path('administracion/',include('administracion.urls')),
     path('usuario/',include('usuario.urls')),

@@ -20,3 +20,27 @@ admin.site.register(Horario)
 admin.site.register(TipoDeActividad)
 admin.site.register(Actividad)
 admin.site.register(Inscripcion)
+
+class GymAdminSite(admin.AdminSite):
+    site_header = 'Powerful Gym'
+    site_title = 'Administración Powerful Gym'
+    index_title = 'Administración Powerful Gym'
+    empty_values_display = 'No hay registros para mostrar'
+
+# Personalización del CRUD de Actividad
+#Las inscripciones se muestran como campo ManyToMany
+class InscripcionInline(admin.TabularInline):
+    model = Inscripcion
+
+class HorarioInline(admin.TabularInline):
+    model = Horario
+
+
+class ActividadAdmin(admin.ModelAdmin):
+    inlines = [
+        HorarioInline,
+        InscripcionInline,
+    ]
+
+sitio_admin = GymAdminSite(name = "gymadmin")
+sitio_admin.register(Actividad, ActividadAdmin)
