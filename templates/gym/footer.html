@@ -2,7 +2,8 @@
   <div class="col-md-4 d-flex align-items-center">
     <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
       <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-    <img src="static/img/powerfull.png" alt="" width="200" height="30">
+      {% load static%}
+    <img src="{% static '/img/powerfull.png' %}" alt="" width="200" height="30">
     </a>
   </div>
 
