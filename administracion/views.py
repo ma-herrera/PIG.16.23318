@@ -4,8 +4,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-from administracion.forms import TipoDeActividadForm, ProfesorForm
-from administracion.models import TipoDeActividad, Profesor, Persona
+from administracion.forms import TipoDeActividadForm, ProfesorForm, ClienteForm
+from administracion.models import TipoDeActividad, Profesor, Persona, Cliente
 from usuario.mixin import has_permission
 
 from django.contrib import messages
@@ -30,7 +30,7 @@ def tipo_de_actividad_index(request):
         snombre = request.GET['nombre']
         qs_tipos_de_actividad = TipoDeActividad.objects.filter(nombre=snombre)
     else:
-        qs_tipos_de_actividad = TipoDeActividad.objects.all
+        qs_tipos_de_actividad = TipoDeActividad.objects.all()
 
     return render(request,'administracion/tipo_de_actividad/index.html',{'qs_tipos_de_actividad':qs_tipos_de_actividad})
 
@@ -79,6 +79,17 @@ def tipo_de_actividad_buscar(request):
 
 ############################## PROFESOR ##################################
 
+@has_permission
+def profesor_index(request):
+    if request.GET:
+        sapellido = request.GET['apellido']
+        qs_profesor = Profesor.objects.filter(apellido=sapellido)
+    else:
+        qs_profesor = Profesor.objects.all()
+
+    return render(request,'administracion/profesor/index.html',{'qs_profesor':qs_profesor})
+
+
 class ProfesorIndexListView(ListView):
     model = Profesor
     context_object_name = 'qs_profesor'
@@ -119,6 +130,62 @@ class ProfesorDeleteView(DeleteView):
 @has_permission
 def profesor_buscar(request):
     return render(request, "administracion/profesor/buscar.html")
+
+############################## CLIENTE ##################################
+
+@has_permission
+def cliente_index(request):
+    if request.GET:
+        sapellido = request.GET['apellido']
+        qs_cliente = Cliente.objects.filter(apellido=sapellido)
+    else:
+        qs_cliente = Cliente.objects.all()
+
+    return render(request,'administracion/cliente/index.html',{'qs_cliente':qs_cliente})
+
+
+class ClienteIndexListView(ListView):
+    model = Cliente
+    context_object_name = 'qs_cliente'
+    template_name = 'administracion/cliente/index.html'
+    ordering = ['apellido', 'nombre']
+    paginate_by = 6
+
+    def get_queryset(self):
+        if (self.request.method == 'GET' and self.request.GET and self.request.GET['apellido']):
+            sapellido = self.request.GET['apellido']
+            return Cliente.objects.filter(apellido=sapellido)
+        else:
+            return Cliente.objects.all()
+
+
+#usa el formulario del modelo
+# TO DO chequear posibles excepciones durante el save()
+#TO DO implementar el softDelete()
+class ClienteNuevoView(CreateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = 'administracion/cliente/nuevo.html'
+    success_url = reverse_lazy('cliente_index_view')
+
+
+class ClienteUpdateView(UpdateView):
+    model = Cliente
+    fields = ["apellido", "nombre", "tipoDocumento", "numeroDocumento", "telefono", 'email', 'coberturaMedica', 'numeroAfiliado', 'cuil', 'fechaAlta', 'fechaBaja']
+    template_name = 'administracion/cliente/editar.html'
+    success_url = reverse_lazy('cliente_index_view')
+
+#Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
+class ClienteDeleteView(DeleteView):
+    model = Cliente
+    template_name = 'administracion/cliente/eliminar.html'
+    success_url = reverse_lazy('cliente_index_view')
+
+@has_permission
+def cliente_buscar(request):
+    return render(request, "administracion/cliente/buscar.html")
+
+
 
 
 # #usa el formulario del modelo
