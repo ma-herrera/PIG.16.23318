@@ -37,8 +37,9 @@
                     <td>{{usuario.documento}}</td>
                     <td>{{usuario.email}}</td>
                     <td>
-                        <a href="" class="btn btn-warning">Editar</a>
-                        <a href="" class="btn btn-danger">Eliminar</a>
+                        <a href="{% url 'editar_usuario' usuario.id %}" title="Editar" class="btn btn-warning">Editar<i class="fas fa-trash"></i></a>
+                        <a href="{% url 'eliminar_usuario' usuario.id %}" title="Eliminar" class="btn btn-danger">Eliminar<i class="fas fa-trash"></i></a>
+
                     </td>
                 </tr>
                 {% endfor %}

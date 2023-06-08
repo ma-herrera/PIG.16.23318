@@ -26,10 +26,8 @@ class RegistrarUsuario(CreateView):
 
     def post(self,request,*args, **kwargs):
         form= self.form_class(request.POST)
-        print("entro a registro")
         
         if form.is_valid():
-            print("formulario valido")
             nuevo_usuario=Usuario(
                 email = form.cleaned_data.get('email'),
                 username = form.cleaned_data.get('username'),
@@ -38,11 +36,9 @@ class RegistrarUsuario(CreateView):
                 documento = form.cleaned_data.get('documento')
             )
             nuevo_usuario.set_password(form.cleaned_data.get('password1'))
-            print("guarda el usuario")
             nuevo_usuario.save()
             return redirect('home')
         else: 
-            print("no es valido")
             return render(request, self.template_name, {'form':form})
 
 
@@ -84,9 +80,8 @@ class Login(FormView):
         else:
 
             return super(Login.self).dispatch(request,*args,**kwargs)
-    print("entro a login")    
+    
     def form_valid(self,form):
-        print("formulario login valido")
         login(self.request, form.get_user())
         return super(Login,self).form_valid(form)
     
@@ -107,11 +102,20 @@ class EliminarUsuario(LoginYSuperUsuarioMixin, DeleteView):
     template_name = 'usuario/eliminar_usuario.html'
     success_url = reverse_lazy('listar_usuarios')
 
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        self.object.soft_delete()  
-        return HttpResponseRedirect(self.get_success_url())
+    #Eliminacion logica
+    # def post(self, request, pk,*args, **kwargs):
+    #     object = Usuario.objects.get(id = pk)
+    #     object.estado = False
+    #     object.save()
+    #     return redirect('listar_usuarios')
+  
     
-   
+class EditarUsuario(LoginYSuperUsuarioMixin, UpdateView):
+    model = Usuario
+    template_name = 'usuario/editar_usuario.html'
+    form_class = FormularioUsuario
+    success_url = reverse_lazy('listar_usuarios')   
+
+
     
    

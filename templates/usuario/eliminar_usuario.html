@@ -1,4 +1,6 @@
-{% extends '../base.html' %}
+{% extends 'administracion/base_administracion.html' %}
+
+
 
 {% block titulo %}Eliminar usuario{% endblock%}
 
@@ -14,9 +16,12 @@
 <div class="card">
     <div class="card-header">Eliminacion de usuario</div>
     <div class="card-body">
-        <form method="post">{% csrf_token %}
-            <p>Esta seguro que quiere eliminar al usuario "{{ object.nombre }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <p>Esta seguro que quiere eliminar al usuario "{{ object.username }}"?</p>
             <input type="submit" value="Confirmar" class="btn btn-danger">
+            <a class="btn btn-secondary" href="{% url 'listar_usuarios' %}" >Cancelar</a>
+
         </form>
         
     </div>
