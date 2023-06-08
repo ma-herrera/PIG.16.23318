@@ -1,10 +1,10 @@
 {% extends '../base_administracion.html' %}
 
-{% block titulo %}Profesores{% endblock%}
+{% block titulo %}Clientes{% endblock%}
 
 {% block contenido %}
 <br><br><br>
-<h1 class="mt-4">Profesores</h1>
+<h1 class="mt-4">Clientes</h1>
 
 <!-- Se harcodea el campo que se va a usar para el campo de busqueda (no implementado TO DO) -->
 
@@ -37,7 +37,7 @@
 <br>
 <div class="card">
     <div class="card-body">
-        <a name="" id="" class="btn btn-success" href="{% url 'profesor_nuevo_view' %}" role="button"> <i class="fa-solid fa-circle-plus"></i>Nuevo</a>
+        <a name="" id="" class="btn btn-success" href="{% url 'cliente_nuevo_view' %}" role="button"> <i class="fa-solid fa-circle-plus"></i>Nuevo</a>
         <!-- bs5-table-defaul -->
         <table class="table">
          <!-- class="table"> -->
@@ -50,14 +50,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for profesor in qs_profesor %}
+                {% for cliente in qs_cliente %}
                     <tr>
-                        <td>{{profesor.id}}</td>
-                        <td>{{profesor.apellido}}</td>
-                        <td>{{profesor.nombre}}</td>
+                        <td>{{cliente.id}}</td>
+                        <td>{{cliente.apellido}}</td>
+                        <td>{{cliente.nombre}}</td>
                         <td>
-                            <a href="{% url 'profesor_editar_view' profesor.id %}" title="Editar" class="btn btn-warning">Editar<i class="fas fa-pencil"></i></a>
-                            <a href="{% url 'profesor_eliminar_view' profesor.id %}" title="Eliminar" class="btn btn-danger">Eliminar<i class="fas fa-trash"></i></a>
+                            <a href="{% url 'cliente_editar_view' cliente.id %}" title="Editar" class="btn btn-warning">Editar<i class="fas fa-pencil"></i></a>
+                            <a href="{% url 'cliente_eliminar_view' cliente.id %}" title="Eliminar" class="btn btn-danger">Eliminar<i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 {% endfor %}
