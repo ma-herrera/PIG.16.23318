@@ -2,6 +2,12 @@
 {% load static %}
 {% block title %}Contacto{% endblock title %}
 
+{% block headStaticContent %}
+    {% load static %}
+    <!-- <link href="{% static '/gym/css/home.css' %}" rel="stylesheet"> -->
+    <link rel="stylesheet" href="{% static '/gym/css/contact.css' %}"/>
+{% endblock headStaticContent %}
+
 {% block headerContent %}
     {% include './header.html' %}
     
@@ -9,6 +15,7 @@
 
 {% block contenido %}
 <main class="mainContainer container">
+<!-- <main class="container"> -->
 <div class="container col-md-6 mb-md-0 mb-6 ">
     <div class="row vh-auto justify-content-center ">
         <div class="rounded col-auto bg-light p-4">
@@ -62,7 +69,7 @@
 
 </div>
 </main> 
-<script src={% static 'gym/js/sing_up.js' %}></script>
+<script src="{% static 'gym/js/sing_up.js' %}"></script>
 {% endblock contenido %}
 
 {% block footerContent %}

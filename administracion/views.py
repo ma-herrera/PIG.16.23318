@@ -4,8 +4,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-from administracion.forms import TipoDeActividadForm
-from administracion.models import TipoDeActividad
+from administracion.forms import TipoDeActividadForm, ProfesorForm
+from administracion.models import TipoDeActividad, Profesor, Persona
 from usuario.mixin import has_permission
 
 from django.contrib import messages
@@ -76,6 +76,50 @@ class TipoDeActividadDeleteView(DeleteView):
 @has_permission
 def tipo_de_actividad_buscar(request):
     return render(request, "administracion/tipo_de_actividad/buscar.html")
+
+############################## PROFESOR ##################################
+
+class ProfesorIndexListView(ListView):
+    model = Profesor
+    context_object_name = 'qs_profesor'
+    template_name = 'administracion/profesor/index.html'
+    ordering = ['apellido', 'nombre']
+    paginate_by = 6
+
+    def get_queryset(self):
+        if (self.request.method == 'GET' and self.request.GET and self.request.GET['apellido']):
+            sapellido = self.request.GET['apellido']
+            return Profesor.objects.filter(apellido=sapellido)
+        else:
+            return Profesor.objects.all()
+
+
+#usa el formulario del modelo
+# TO DO chequear posibles excepciones durante el save()
+#TO DO implementar el softDelete()
+class ProfesorNuevoView(CreateView):
+    model = Profesor
+    form_class = ProfesorForm
+    template_name = 'administracion/profesor/nuevo.html'
+    success_url = reverse_lazy('profesor_index_view')
+
+
+class ProfesorUpdateView(UpdateView):
+    model = Profesor
+    fields = ["apellido", "nombre", "tipoDocumento", "numeroDocumento", "telefono", 'email', 'coberturaMedica', 'numeroAfiliado', 'cuil', 'fechaAlta', 'fechaBaja']
+    template_name = 'administracion/profesor/editar.html'
+    success_url = reverse_lazy('profesor_index_view')
+
+#Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
+class ProfesorDeleteView(DeleteView):
+    model = Profesor
+    template_name = 'administracion/profesor/eliminar.html'
+    success_url = reverse_lazy('profesor_index_view')
+
+@has_permission
+def profesor_buscar(request):
+    return render(request, "administracion/profesor/buscar.html")
+
 
 # #usa el formulario del modelo
 # #TO DO chequear posibles excepciones durante el save()

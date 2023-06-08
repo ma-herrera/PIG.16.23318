@@ -22,7 +22,7 @@ from administracion.admin import sitio_admin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('admingym/', sitio_admin.urls),
+    path('gymadmin/', sitio_admin.urls),
     path('',include('gym.urls')),
     path('administracion/',include('administracion.urls')),
     path('usuario/',include('usuario.urls')),
