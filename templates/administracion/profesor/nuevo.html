@@ -13,7 +13,7 @@
 <div class="card">
     <div class="card-header">Creacion de profesores</div>
     <div class="card-body">
-        <form action="{% url 'tipo_de_actividad_nuevo_view' %}" method="post" enctype="multipart/form-data" novalidate>
+        <form action="{% url 'profesor_nuevo_view' %}" method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             {% include 'administracion/profesor/form.html' %}
         </form>

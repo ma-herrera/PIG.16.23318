@@ -92,6 +92,7 @@ class ProfesorForm(forms.ModelForm):
 
     fechaBaja = forms.DateField(
             label='Fecha de Baja', 
+            required=False,
             widget=forms.DateInput(attrs={'class':'form-control','type':'date'})
         )
 
