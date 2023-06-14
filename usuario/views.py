@@ -13,7 +13,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.http import HttpResponseRedirect
-from .form_autenticacion import FormularioLogin, FormularioUsuario
+from .form_autenticacion import FormularioLogin, FormularioUsuario, CambiarPasswordForm
 from usuario.models import Usuario
 from usuario.mixin import LoginYSuperUsuarioMixin
 
@@ -118,4 +118,26 @@ class EditarUsuario(LoginYSuperUsuarioMixin, UpdateView):
 
 
     
-   
+class CambiarPassword(View):
+    template_name = 'usuarios/cambiar_password.html'
+    form_class = CambiarPasswordForm
+    success_url = reverse_lazy('home')
+
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'form': self.form_class})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = Usuario.objects.filter(id=request.user.id)
+            if user.exists():
+                user = user.first()
+                user.set_password(form.cleaned_data.get('password1'))
+                user.save()
+                logout(request)
+                return redirect(self.success_url)
+            return redirect(self.success_url)
+        else:
+            form = self.form_class(request.POST)
+            return render(request, self.template_name, {'form': form})
+
