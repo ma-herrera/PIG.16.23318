@@ -171,7 +171,8 @@ class ClienteNuevoView(CreateView):
 
 class ClienteUpdateView(UpdateView):
     model = Cliente
-    fields = ["apellido", "nombre", "tipoDocumento", "numeroDocumento", "telefono", 'email', 'coberturaMedica', 'numeroAfiliado', 'cuil', 'fechaAlta', 'fechaBaja']
+    form_class = ClienteForm
+    # fields = ["apellido", "nombre", "tipoDocumento", "numeroDocumento", "telefono", 'email', 'coberturaMedica', 'numeroAfiliado', 'fechaAlta', 'fechaBaja', 'paseLibre', 'fechaPagoPaseLibre', 'aptoFisico']
     template_name = 'administracion/cliente/editar.html'
     success_url = reverse_lazy('cliente_index_view')
 
