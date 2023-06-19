@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from administracion.forms import TipoDeActividadForm, ProfesorForm
 from administracion.models import TipoDeActividad, Profesor, Persona
-from usuario.mixin import has_permission
+from usuario.mixin import has_permission, LoginYSuperUsuarioMixin
 
 from django.contrib import messages
 
@@ -36,7 +36,7 @@ def tipo_de_actividad_index(request):
 
 ###################### CLASS VIEW ###################
 
-class TipoDeActividadIndexListView(ListView):
+class TipoDeActividadIndexListView(LoginYSuperUsuarioMixin,ListView):
     model = TipoDeActividad
     context_object_name = 'qs_tipos_de_actividad'
     template_name = 'administracion/tipo_de_actividad/index.html'
@@ -54,21 +54,21 @@ class TipoDeActividadIndexListView(ListView):
 #usa el formulario del modelo
 # TO DO chequear posibles excepciones durante el save()
 #TO DO implementar el softDelete()
-class TipoDeActividadNuevoView(CreateView):
+class TipoDeActividadNuevoView(LoginYSuperUsuarioMixin,CreateView):
     model = TipoDeActividad
     form_class = TipoDeActividadForm
     template_name = 'administracion/tipo_de_actividad/nuevo.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
 
 
-class TipoDeActividadUpdateView(UpdateView):
+class TipoDeActividadUpdateView(LoginYSuperUsuarioMixin,UpdateView):
     model = TipoDeActividad
     fields = ['nombre', 'titulo', 'subtitulo', 'descripcion', 'imagen_de_portada']
     template_name = 'administracion/tipo_de_actividad/editar.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
 
 #Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
-class TipoDeActividadDeleteView(DeleteView):
+class TipoDeActividadDeleteView(LoginYSuperUsuarioMixin,DeleteView):
     model = TipoDeActividad
     template_name = 'administracion/tipo_de_actividad/eliminar.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
@@ -79,7 +79,7 @@ def tipo_de_actividad_buscar(request):
 
 ############################## PROFESOR ##################################
 
-class ProfesorIndexListView(ListView):
+class ProfesorIndexListView(LoginYSuperUsuarioMixin,ListView):
     model = Profesor
     context_object_name = 'qs_profesor'
     template_name = 'administracion/profesor/index.html'
@@ -97,21 +97,21 @@ class ProfesorIndexListView(ListView):
 #usa el formulario del modelo
 # TO DO chequear posibles excepciones durante el save()
 #TO DO implementar el softDelete()
-class ProfesorNuevoView(CreateView):
+class ProfesorNuevoView(LoginYSuperUsuarioMixin,CreateView):
     model = Profesor
     form_class = ProfesorForm
     template_name = 'administracion/profesor/nuevo.html'
     success_url = reverse_lazy('profesor_index_view')
 
 
-class ProfesorUpdateView(UpdateView):
+class ProfesorUpdateView(LoginYSuperUsuarioMixin,UpdateView):
     model = Profesor
     fields = ["apellido", "nombre", "tipoDocumento", "numeroDocumento", "telefono", 'email', 'coberturaMedica', 'numeroAfiliado', 'cuil', 'fechaAlta', 'fechaBaja']
     template_name = 'administracion/profesor/editar.html'
     success_url = reverse_lazy('profesor_index_view')
 
 #Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
-class ProfesorDeleteView(DeleteView):
+class ProfesorDeleteView(LoginYSuperUsuarioMixin,DeleteView):
     model = Profesor
     template_name = 'administracion/profesor/eliminar.html'
     success_url = reverse_lazy('profesor_index_view')

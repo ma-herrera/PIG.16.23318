@@ -34,6 +34,8 @@
     var contraseña = document.getElementById("password1").value;
     var longitud = contraseña.length;
     var mensaje = "";
+
+    console.log("llega a fortaleza")
     
     if (longitud === 0) {
     mensaje = "";
@@ -56,3 +58,4 @@
     document.getElementById("mensajePass").innerHTML = mensaje;
   
 }
+

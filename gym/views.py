@@ -8,10 +8,8 @@ from django.contrib import messages
 from gym.forms import ContactoForm
 from administracion.models import TipoDeActividad
 
-# from .forms_registro import RegistroForm
 
 
-# Create your views here.
 def home(request):
     template = loader.get_template("gym/home.html")
     context = {"title": "Home"}
@@ -42,12 +40,6 @@ def contacto(request):
 
 def actividades(request):
     return render(request, 'gym/actividades.html')
-
-
-
-def actividades(request):
-    return render(request, 'gym/actividades.html')
-
 
 
 def get_actividades_json (request):

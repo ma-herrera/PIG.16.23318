@@ -21,3 +21,10 @@ def has_permission(function):
         else:
            return redirect('home')
     return wrap
+
+class LoginMixin(object):
+    
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return super().dispatch(request, *args, **kwargs)
+        return redirect('home')

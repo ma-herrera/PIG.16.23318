@@ -46,8 +46,7 @@ INSTALLED_APPS = [
     'gym',
     'administracion',
     'usuario',
-    'crispy_forms',
-    'crispy_bootstrap5',
+   
 ]
 
 MIDDLEWARE = [
