@@ -5,9 +5,9 @@
 {% block contenido %}
 
 <h1 class="mt-4">Lista de mensajes</h1>
-<div class="card">
+{% comment %} <div class="card">
 {% include 'administracion/mensajes_contacto/buscar_mensaje.html' %}
-</div>
+</div> {% endcomment %}
 <br>
 {% if object_list %}
 
@@ -36,7 +36,7 @@
                     <td>{{ mensaje.asunto }}</td>
                     <td>{{ mensaje.mensaje }}</td>
                     <td>
-                        <a href="#" title="Editar" class="btn btn-warning">Ver<i class="fas fa-trash"></i></a>
+                        {% comment %} <a href="#" title="Editar" class="btn btn-warning">Ver<i class="fas fa-trash"></i></a> {% endcomment %}
                         <a href="{% url 'eliminar_mensaje' mensaje.id %}" title="Eliminar" class="btn btn-danger">Eliminar<i class="fas fa-trash"></i></a>
                     </td>
                 </tr>
