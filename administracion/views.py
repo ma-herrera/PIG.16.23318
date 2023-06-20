@@ -54,6 +54,9 @@ class TipoDeActividadNuevoView(LoginYSuperUsuarioMixin,CreateView):
     template_name = 'administracion/tipo_de_actividad/nuevo.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'La actividad se ha creado correctamente')
+        return super().form_valid(form)
 
 class TipoDeActividadUpdateView(LoginYSuperUsuarioMixin,UpdateView):
     model = TipoDeActividad
@@ -61,10 +64,20 @@ class TipoDeActividadUpdateView(LoginYSuperUsuarioMixin,UpdateView):
     template_name = 'administracion/tipo_de_actividad/editar.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'La actividad se ha editado correctamente')
+        return super().form_valid(form)
+
 class TipoDeActividadDeleteView(LoginYSuperUsuarioMixin,DeleteView):
     model = TipoDeActividad
     template_name = 'administracion/tipo_de_actividad/eliminar.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
+
+    def post(self, request, pk,*args, **kwargs):
+        objeto = self.get_object()
+        objeto.delete()
+        messages.success(request,"La actividad se ha eliminado correctamente")
+        return redirect(self.success_url)
 
 @has_permission
 def tipo_de_actividad_buscar(request):
@@ -85,13 +98,18 @@ class ProfesorIndexListView(LoginYSuperUsuarioMixin,ListView):
             return Profesor.objects.filter(apellido=sapellido)
         else:
             return Profesor.objects.all()
-
+        
+  
+    
 class ProfesorNuevoView(LoginYSuperUsuarioMixin,CreateView):
     model = Profesor
     form_class = ProfesorForm
     template_name = 'administracion/profesor/nuevo.html'
     success_url = reverse_lazy('profesor_index_view')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'El profesor se ha registrado correctamente')
+        return super().form_valid(form)
 
 class ProfesorUpdateView(LoginYSuperUsuarioMixin,UpdateView):
     model = Profesor
@@ -99,11 +117,21 @@ class ProfesorUpdateView(LoginYSuperUsuarioMixin,UpdateView):
     template_name = 'administracion/profesor/editar.html'
     success_url = reverse_lazy('profesor_index_view')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'El profesor se ha editado correctamente')
+        return super().form_valid(form)
+    
 class ProfesorDeleteView(LoginYSuperUsuarioMixin,DeleteView):
     model = Profesor
     template_name = 'administracion/profesor/eliminar.html'
     success_url = reverse_lazy('profesor_index_view')
 
+    def post(self, request, pk,*args, **kwargs):
+        objeto = self.get_object()
+        objeto.delete()
+        messages.success(request,"El profesor se ha eliminado correctamente")
+        return redirect(self.success_url)
+    
 @has_permission
 def profesor_buscar(request):
     return render(request, "administracion/profesor/buscar.html")
@@ -131,17 +159,29 @@ class ClienteNuevoView(LoginYSuperUsuarioMixin,CreateView):
     template_name = 'administracion/cliente/nuevo.html'
     success_url = reverse_lazy('cliente_index_view')
 
-
+    def form_valid(self, form):
+        messages.success(self.request, 'El cliente se ha registrado correctamente')
+        return super().form_valid(form)
 class ClienteUpdateView(LoginYSuperUsuarioMixin,UpdateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'administracion/cliente/editar.html'
     success_url = reverse_lazy('cliente_index_view')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'El cliente se ha editado correctamente')
+        return super().form_valid(form)
+
 class ClienteDeleteView(LoginYSuperUsuarioMixin,DeleteView):
     model = Cliente
     template_name = 'administracion/cliente/eliminar.html'
     success_url = reverse_lazy('cliente_index_view')
+
+    def post(self, request, pk,*args, **kwargs):
+        objeto = self.get_object()
+        objeto.delete()
+        messages.success(request,"El cliente se ha eliminado correctamente")
+        return redirect(self.success_url)
 
 @has_permission
 def cliente_buscar(request):
