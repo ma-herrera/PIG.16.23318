@@ -4,8 +4,8 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
-from administracion.forms import TipoDeActividadForm, ProfesorForm
-from administracion.models import TipoDeActividad, Profesor, Persona
+from administracion.forms import TipoDeActividadForm, ProfesorForm, ClienteForm
+from administracion.models import TipoDeActividad, Profesor, Persona, Cliente
 from usuario.mixin import has_permission, LoginYSuperUsuarioMixin
 
 from django.contrib import messages
@@ -23,9 +23,7 @@ def home_administracion(request):
 #pantalla principal de crud de tipos de actividades
 @has_permission
 def tipo_de_actividad_index(request):
-    #queryset
-    # tipo_de_actividad = TipoDeActividad.objects.filter(baja=False)
-
+    
     if request.GET:
         snombre = request.GET['nombre']
         qs_tipos_de_actividad = TipoDeActividad.objects.filter(nombre=snombre)
@@ -50,10 +48,6 @@ class TipoDeActividadIndexListView(LoginYSuperUsuarioMixin,ListView):
         else:
             return TipoDeActividad.objects.all()
 
-
-#usa el formulario del modelo
-# TO DO chequear posibles excepciones durante el save()
-#TO DO implementar el softDelete()
 class TipoDeActividadNuevoView(LoginYSuperUsuarioMixin,CreateView):
     model = TipoDeActividad
     form_class = TipoDeActividadForm
@@ -67,7 +61,6 @@ class TipoDeActividadUpdateView(LoginYSuperUsuarioMixin,UpdateView):
     template_name = 'administracion/tipo_de_actividad/editar.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
 
-#Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
 class TipoDeActividadDeleteView(LoginYSuperUsuarioMixin,DeleteView):
     model = TipoDeActividad
     template_name = 'administracion/tipo_de_actividad/eliminar.html'
@@ -93,10 +86,6 @@ class ProfesorIndexListView(LoginYSuperUsuarioMixin,ListView):
         else:
             return Profesor.objects.all()
 
-
-#usa el formulario del modelo
-# TO DO chequear posibles excepciones durante el save()
-#TO DO implementar el softDelete()
 class ProfesorNuevoView(LoginYSuperUsuarioMixin,CreateView):
     model = Profesor
     form_class = ProfesorForm
@@ -106,11 +95,10 @@ class ProfesorNuevoView(LoginYSuperUsuarioMixin,CreateView):
 
 class ProfesorUpdateView(LoginYSuperUsuarioMixin,UpdateView):
     model = Profesor
-    fields = ["apellido", "nombre", "tipoDocumento", "numeroDocumento", "telefono", 'email', 'coberturaMedica', 'numeroAfiliado', 'cuil', 'fechaAlta', 'fechaBaja']
+    form_class = ProfesorForm
     template_name = 'administracion/profesor/editar.html'
     success_url = reverse_lazy('profesor_index_view')
 
-#Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
 class ProfesorDeleteView(LoginYSuperUsuarioMixin,DeleteView):
     model = Profesor
     template_name = 'administracion/profesor/eliminar.html'
@@ -121,43 +109,42 @@ def profesor_buscar(request):
     return render(request, "administracion/profesor/buscar.html")
 
 
-# #usa el formulario del modelo
-# #TO DO chequear posibles excepciones durante el save()
-# #TO DO implementar el softDelete()
-# def tipo_de_actividad_nuevo(request):
-#     if(request.method=='POST'):
-#         formulario = TipoDeActividadForm(request.POST, request.FILES)
-#         if formulario.is_valid():
-#             formulario.save()
-#             return redirect('tipo_de_actividad_index')
-#     else:
-#         formulario = TipoDeActividadForm()
-#     return render(request,'administracion/tipo_de_actividad/nuevo.html',{'formulario':formulario})
+############################## CLIENTE ##################################
 
-# def tipo_de_actividad_editar(request, id_tipo_de_actividad):
-#     try:
-#         tipo_de_actividad = TipoDeActividad.objects.get(pk=id_tipo_de_actividad)
-#         tipo_de_actividad = TipoDeActividad.objects.get(pk=id_tipo_de_actividad)
-#     except TipoDeActividad.DoesNotExist:
-#         # return render(request,'administracion/404_admin.html')
-#         return redirect('tipo_de_actividad_index')
+class ClienteIndexListView(LoginYSuperUsuarioMixin,ListView):
+    model = Cliente
+    context_object_name = 'qs_cliente'
+    template_name = 'administracion/cliente/index.html'
+    ordering = ['apellido', 'nombre']
+    paginate_by = 6
 
-#     if(request.method=='POST'):
-#         formulario = TipoDeActividadForm(request.POST,request.FILES, instance=tipo_de_actividad)
-#         if formulario.is_valid():
-#             formulario.save()
-#             return redirect('tipo_de_actividad_index')
-#     else:
-#         formulario = TipoDeActividadForm(instance=tipo_de_actividad)
-#     return render(request,'administracion/tipo_de_actividad/editar.html',{'formulario':formulario})
+    def get_queryset(self):
+        if (self.request.method == 'GET' and self.request.GET and self.request.GET['apellido']):
+            sapellido = self.request.GET['apellido']
+            return Cliente.objects.filter(apellido=sapellido)
+        else:
+            return Cliente.objects.all()
 
-# #TO DO implementar softDelete(en models.py)
-# def tipo_de_actividad_eliminar(request,id_tipo_de_actividad):
-#     try:
-#         tipo_de_actividad = TipoDeActividad.objects.get(pk=id_tipo_de_actividad)
-#     except TipoDeActividad.DoesNotExist:
-#         # return render(request,'administracion/404_admin.html')
-#         Warning("Tipo de actividad no encontrado")
-#         return redirect('tipo_de_actividad_index')
-#     tipo_de_actividad.delete()
-#     return redirect('tipo_de_actividad_index')
+class ClienteNuevoView(LoginYSuperUsuarioMixin,CreateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = 'administracion/cliente/nuevo.html'
+    success_url = reverse_lazy('cliente_index_view')
+
+
+class ClienteUpdateView(LoginYSuperUsuarioMixin,UpdateView):
+    model = Cliente
+    form_class = ClienteForm
+    template_name = 'administracion/cliente/editar.html'
+    success_url = reverse_lazy('cliente_index_view')
+
+class ClienteDeleteView(LoginYSuperUsuarioMixin,DeleteView):
+    model = Cliente
+    template_name = 'administracion/cliente/eliminar.html'
+    success_url = reverse_lazy('cliente_index_view')
+
+@has_permission
+def cliente_buscar(request):
+    return render(request, "administracion/cliente/buscar.html")
+
+

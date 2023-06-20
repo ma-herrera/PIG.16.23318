@@ -45,3 +45,10 @@ class ActividadAdmin(admin.ModelAdmin):
 
 sitio_admin = GymAdminSite(name = "gymadmin")
 sitio_admin.register(Actividad, ActividadAdmin)
+sitio_admin.register(TipoDocumento)
+sitio_admin.register(Cliente)
+sitio_admin.register(Profesor)
+sitio_admin.register(Horario)
+sitio_admin.register(TipoDeActividad)
+sitio_admin.register(Inscripcion)
+sitio_admin.register(Contacto)

@@ -154,10 +154,6 @@ MEDIA_URL = "/media/"
 #media para produccion
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
-
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
-
 MESSAGE_TAGS={
     mensajes_de_error.DEBUG: 'debug',
     mensajes_de_error.INFO: 'info',

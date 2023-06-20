@@ -16,12 +16,14 @@ urlpatterns = [
     path('profesor/eliminar/<int:pk>', views.ProfesorDeleteView.as_view(), name="profesor_eliminar_view"),
     path('profesor/buscar/', views.profesor_buscar,name='profesor_buscar'),
 
+    path('cliente/', views.ClienteIndexListView.as_view(), name="cliente_index_view"),
+    path('cliente/nuevo/', views.ClienteNuevoView.as_view(), name="cliente_nuevo_view"),
+    path('cliente/editar/<int:pk>', views.ClienteUpdateView.as_view(), name="cliente_editar_view"),
+    path('cliente/eliminar/<int:pk>', views.ClienteDeleteView.as_view(), name="cliente_eliminar_view"),
+    path('cliente/buscar/', views.cliente_buscar,name='cliente_buscar'),
+
     path('mensajes', ListadoMensajes.as_view(), name="listar_mensajes"),
     path('mensajes/eliminar/<int:pk>', EliminarMensaje.as_view(), name="eliminar_mensaje"),
     path('mensajes/buscar/', buscar_mensaje,name='mensajes_buscar'),
 
-    # path('tipo_de_actividad/', views.tipo_de_actividad_index,name='tipo_de_actividad_index'),
-    # path('tipo_de_actividad/nuevo/', views.tipo_de_actividad_nuevo,name='tipo_de_actividad_nuevo'),
-    # path('tipo_de_actividad/editar/<int:id_tipo_de_actividad>', views.tipo_de_actividad_editar,name='tipo_de_actividad_editar'),
-    # path('tipo_de_actividad/eliminar/<int:id_tipo_de_actividad>', views.tipo_de_actividad_eliminar,name='tipo_de_actividad_eliminar'),
 ]

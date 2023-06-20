@@ -115,5 +115,5 @@ def get_actividades_json (request):
     lista_de_actividades = TipoDeActividad.objects.all()
     lista_json = serializers.serialize("json", lista_de_actividades)
     dict_json = '{"lista":' + lista_json + '}'
-    # return HttpResponse(lista_json)
+    
     return HttpResponse(dict_json)
