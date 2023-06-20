@@ -110,7 +110,7 @@ class ProfesorNuevoView(CreateView):
 
 class ProfesorUpdateView(UpdateView):
     model = Profesor
-    fields = ["apellido", "nombre", "tipoDocumento", "numeroDocumento", "telefono", 'email', 'coberturaMedica', 'numeroAfiliado', 'cuil', 'fechaAlta', 'fechaBaja']
+    form_class = ProfesorForm
     template_name = 'administracion/profesor/editar.html'
     success_url = reverse_lazy('profesor_index_view')
 

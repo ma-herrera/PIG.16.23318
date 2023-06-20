@@ -5,18 +5,28 @@
             <div class="md-form mb-2"> -->
                 <div class="form-group">
                 <label for="" class="form-label">{{campo.label}}</label>
-                
-                <input
-                    type="{{campo.field.widget.input_type}}" 
-                    name="{{campo.name}}" 
+                {% if campo.field.widget.input_type == 'date' %}
+                    {% comment %}   
+                    {{campo}}
+                    {% endcomment %}
+                    <input
+                    type="{{campo.field.widget.input_type}}"
+                    name="{{campo.name}}"
                     id="{{campo.name}}"
-                    class="form-control"
+                    value = "{{ campo.value  | date:'Y-m-d' }}"
+                    placeholder="Ingrese {{campo.name}}"
+                    >
+                {% else %}
+                    <input
+                    type="{{campo.field.widget.input_type}}" 
+                    name="{{campo.name}}"
+                    id="{{campo.name}}"
+                    class="{{campo.field.widget.attrs.class }}"
                     placeholder="Ingrese {{campo.name}}"
                     value="{{ campo.value | default:'' }}"
-                >
-                {% comment %}
-                {{campo}}
-                {% endcomment %}    
+                    >
+                {% endif %}
+
 
             </div>
     <!-- </div> -->
