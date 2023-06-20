@@ -18,6 +18,8 @@ def has_permission(function):
         if request.user.is_authenticated:
             if request.user.is_staff:
                  return function(request, *args, **kwargs)
+            else:
+                return redirect('home')
         else:
            return redirect('home')
     return wrap
