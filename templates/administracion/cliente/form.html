@@ -5,15 +5,61 @@
             <div class="md-form mb-2"> -->
                 <div class="form-group">
                 <label for="" class="form-label">{{campo.label}}</label>
-                
-                <input
-                    type="{{campo.field.widget.input_type}}" 
-                    name="{{campo.name}}" 
+                {% if campo.field.widget.input_type == 'date' %}
+                    {% comment %}   
+                    {{campo}}
+                    {% endcomment %}
+                    <input
+                    type="{{campo.field.widget.input_type}}"
+                    name="{{campo.name}}"
                     id="{{campo.name}}"
-                    class="form-control"
+                    value = "{{ campo.value  | date:'Y-m-d' }}"
+                    placeholder="Ingrese {{campo.name}}"
+                    >
+                    {% comment %}   
+                    class='{{campo.field.widget.attrs.class }}'
+                    placeholder="Ingrese {{campo.name}}"
+                    value = "{{ campo.value | date:'SHORT_DATE_FORMAT' }}"
+                    {% endcomment %}
+                {% elif campo.field.widget.input_type == 'checkbox'%}
+                    {% if campo.name == 'paseLibre' and cliente.paseLibre %}
+                        <input
+                        type="{{campo.field.widget.input_type}}" 
+                        name="{{campo.name}}"
+                        id="{{campo.name}}"
+                        class="{{campo.field.widget.attrs.class }}"
+                        checked
+                        value="{{ campo.value | default:'' }}"
+                        >
+                    {% elif campo.name == 'aptoFisico' and cliente.aptoFisico %}
+                        <input
+                        type="{{campo.field.widget.input_type}}" 
+                        name="{{campo.name}}"
+                        id="{{campo.name}}"
+                        class="{{campo.field.widget.attrs.class }}"
+                        checked
+                        value="{{ campo.value | default:'' }}"
+                        >
+                    {% else %}
+                        <input
+                        type="{{campo.field.widget.input_type}}" 
+                        name="{{campo.name}}"
+                        id="{{campo.name}}"
+                        class="{{campo.field.widget.attrs.class }}"
+                        value="{{ campo.value | default:'' }}"
+                        >
+                    {% endif %}
+                {% else %}
+                    <input
+                    type="{{campo.field.widget.input_type}}" 
+                    name="{{campo.name}}"
+                    id="{{campo.name}}"
+                    class="{{campo.field.widget.attrs.class }}"
                     placeholder="Ingrese {{campo.name}}"
                     value="{{ campo.value | default:'' }}"
-                >
+                    >
+                {% endif %}
+
                 {% comment %}
                 {{campo}}
                 {% endcomment %}    

@@ -51,15 +51,12 @@ class TipoDeActividadIndexListView(ListView):
             return TipoDeActividad.objects.all()
 
 
-#usa el formulario del modelo
-# TO DO chequear posibles excepciones durante el save()
-#TO DO implementar el softDelete()
+
 class TipoDeActividadNuevoView(CreateView):
     model = TipoDeActividad
     form_class = TipoDeActividadForm
     template_name = 'administracion/tipo_de_actividad/nuevo.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
-
 
 class TipoDeActividadUpdateView(UpdateView):
     model = TipoDeActividad
@@ -67,7 +64,6 @@ class TipoDeActividadUpdateView(UpdateView):
     template_name = 'administracion/tipo_de_actividad/editar.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
 
-#Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
 class TipoDeActividadDeleteView(DeleteView):
     model = TipoDeActividad
     template_name = 'administracion/tipo_de_actividad/eliminar.html'
@@ -105,9 +101,6 @@ class ProfesorIndexListView(ListView):
             return Profesor.objects.all()
 
 
-#usa el formulario del modelo
-# TO DO chequear posibles excepciones durante el save()
-#TO DO implementar el softDelete()
 class ProfesorNuevoView(CreateView):
     model = Profesor
     form_class = ProfesorForm
@@ -121,7 +114,6 @@ class ProfesorUpdateView(UpdateView):
     template_name = 'administracion/profesor/editar.html'
     success_url = reverse_lazy('profesor_index_view')
 
-#Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
 class ProfesorDeleteView(DeleteView):
     model = Profesor
     template_name = 'administracion/profesor/eliminar.html'
@@ -158,10 +150,6 @@ class ClienteIndexListView(ListView):
         else:
             return Cliente.objects.all()
 
-
-#usa el formulario del modelo
-# TO DO chequear posibles excepciones durante el save()
-#TO DO implementar el softDelete()
 class ClienteNuevoView(CreateView):
     model = Cliente
     form_class = ClienteForm
@@ -172,11 +160,9 @@ class ClienteNuevoView(CreateView):
 class ClienteUpdateView(UpdateView):
     model = Cliente
     form_class = ClienteForm
-    # fields = ["apellido", "nombre", "tipoDocumento", "numeroDocumento", "telefono", 'email', 'coberturaMedica', 'numeroAfiliado', 'fechaAlta', 'fechaBaja', 'paseLibre', 'fechaPagoPaseLibre', 'aptoFisico']
     template_name = 'administracion/cliente/editar.html'
     success_url = reverse_lazy('cliente_index_view')
 
-#Por el momento esta funcion no hace nada. TO DO implementar softDelete( en models.py)
 class ClienteDeleteView(DeleteView):
     model = Cliente
     template_name = 'administracion/cliente/eliminar.html'
@@ -188,7 +174,7 @@ def cliente_buscar(request):
 
 
 
-
+#Version con funciones. Se deja como referencia
 # #usa el formulario del modelo
 # #TO DO chequear posibles excepciones durante el save()
 # #TO DO implementar el softDelete()
