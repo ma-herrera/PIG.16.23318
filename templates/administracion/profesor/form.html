@@ -5,6 +5,7 @@
             <div class="md-form mb-2"> -->
                 <div class="form-group">
                 <label for="" class="form-label">{{campo.label}}</label>
+
                 {% if campo.field.widget.input_type == 'date' %}
                     {% comment %}   
                     {{campo}}
@@ -17,14 +18,25 @@
                     placeholder="Ingrese {{campo.name}}"
                     >
                 {% else %}
-                    <input
-                    type="{{campo.field.widget.input_type}}" 
-                    name="{{campo.name}}"
-                    id="{{campo.name}}"
-                    class="{{campo.field.widget.attrs.class }}"
-                    placeholder="Ingrese {{campo.name}}"
-                    value="{{ campo.value | default:'' }}"
-                    >
+                    {% if campo.name == 'cuil' %}
+                        <input
+                        type="{{campo.field.widget.input_type}}"
+                        name="{{campo.name}}"
+                        id="{{campo.name}}"
+                        value = "{{ campo.value  | default:''}}"
+                        placeholder="Ingrese {{campo.name}}"
+                        maxlength="11"
+                        >
+                    {% else %}
+                        <input
+                        type="{{campo.field.widget.input_type}}" 
+                        name="{{campo.name}}"
+                        id="{{campo.name}}"
+                        class="{{campo.field.widget.attrs.class }}"
+                        placeholder="Ingrese {{campo.name}}"
+                        value="{{ campo.value | default:'' }}"
+                        >
+                    {% endif %}
                 {% endif %}
 
 

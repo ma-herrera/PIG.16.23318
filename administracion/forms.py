@@ -83,9 +83,9 @@ class ProfesorForm(forms.ModelForm):
         widget = forms.TextInput(attrs={'class':'form-control'})
     )
 
-    cuil = forms.IntegerField(
+    cuil = forms.CharField(
         label="Cuil",
-        widget= forms.NumberInput(attrs={'class':'form-control'})
+        widget= forms.TextInput(attrs={'class':'form-control', 'maxlength': '11'})
     )
 
     fechaAlta = forms.DateField(

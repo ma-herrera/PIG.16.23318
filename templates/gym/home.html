@@ -83,6 +83,17 @@
     </button>
 </div> <!--myCarousel-->
 
+{% if messages %}
+   {% for message in messages %}
+       <script>
+           Swal.fire({
+            'title': "{% if message.tags == 'success' %}Excelente{% else %}Error{% endif %}",
+            'text': "{{ message }}",
+            'icon': "{% if message.tags == 'success' %}Excelente{% else %}Error{% endif %}",
+           })
+       </script>
+   {% endfor %}
+  {% endif %} 
 
   <!-- Marketing messaging and featurettes
   ================================================== -->

@@ -83,7 +83,7 @@ class Persona (models.Model):
 
 class Profesor(Persona):
     # corregir para que sea un campo mumerico pero que acepte un cuil (el integer no alcanza)
-    cuil = models.IntegerField(verbose_name="Cuil", help_text="Cuil (sin guiones)")
+    cuil = models.CharField(max_length=11, verbose_name="Cuil", help_text="Cuil (sin guiones)")
     fechaAlta = models.DateField(verbose_name="Fecha de contratación")
     fechaBaja = models.DateField(null=True, blank=True, verbose_name="Fecha de baja")
 

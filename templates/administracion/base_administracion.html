@@ -22,6 +22,7 @@
     <link rel="shortcut icon" href="{% static '/img/Po.svg'%}" type="image/x-icon">
     
     <link href="{% static '/administracion/css/administracion.css'%}" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <!-- <body class="sb-nav-fixed"> -->
@@ -46,10 +47,18 @@
             </div>
         </div>
     </footer>
-    
+    {% if messages %}
+    {% for message in messages %}
+        <script>
+            Swal.fire({
+                "title": "Bien hecho",
+                "text": "{{message}}",
+                "icon": "success"
+            })
+        </script>
+        {% endfor %}
+    {% endif %}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <!-- To DO por ahora lo comento REVISAR -->
-    <!-- <script src="{% static '/administracion/js/scripts.js'%}"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
 </body>

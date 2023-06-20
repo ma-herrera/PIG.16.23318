@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 from administracion.forms import TipoDeActividadForm, ProfesorForm, ClienteForm
 from administracion.models import TipoDeActividad, Profesor, Persona, Cliente
-from usuario.mixin import has_permission
+from usuario.mixin import has_permission, LoginYSuperUsuarioMixin
 
 from django.contrib import messages
 
@@ -23,9 +23,6 @@ def home_administracion(request):
 #pantalla principal de crud de tipos de actividades
 @has_permission
 def tipo_de_actividad_index(request):
-    #queryset
-    # tipo_de_actividad = TipoDeActividad.objects.filter(baja=False)
-
     if request.GET:
         snombre = request.GET['nombre']
         qs_tipos_de_actividad = TipoDeActividad.objects.filter(nombre=snombre)
@@ -36,7 +33,7 @@ def tipo_de_actividad_index(request):
 
 ###################### CLASS VIEW ###################
 
-class TipoDeActividadIndexListView(ListView):
+class TipoDeActividadIndexListView(LoginYSuperUsuarioMixin, ListView):
     model = TipoDeActividad
     context_object_name = 'qs_tipos_de_actividad'
     template_name = 'administracion/tipo_de_actividad/index.html'
@@ -50,24 +47,36 @@ class TipoDeActividadIndexListView(ListView):
         else:
             return TipoDeActividad.objects.all()
 
-
-
-class TipoDeActividadNuevoView(CreateView):
+class TipoDeActividadNuevoView(LoginYSuperUsuarioMixin, CreateView):
     model = TipoDeActividad
     form_class = TipoDeActividadForm
     template_name = 'administracion/tipo_de_actividad/nuevo.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
 
-class TipoDeActividadUpdateView(UpdateView):
+    def form_valid(self, form):
+        messages.success(self.request, 'La actividad se ha registrado correctamente')
+        return super().form_valid(form)
+    
+class TipoDeActividadUpdateView(LoginYSuperUsuarioMixin, UpdateView):
     model = TipoDeActividad
     fields = ['nombre', 'titulo', 'subtitulo', 'descripcion', 'imagen_de_portada']
     template_name = 'administracion/tipo_de_actividad/editar.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
 
-class TipoDeActividadDeleteView(DeleteView):
+    def form_valid(self, form):
+        messages.success(self.request, 'La actividad se ha editado correctamente')
+        return super().form_valid(form)
+    
+class TipoDeActividadDeleteView(LoginYSuperUsuarioMixin, DeleteView):
     model = TipoDeActividad
     template_name = 'administracion/tipo_de_actividad/eliminar.html'
     success_url = reverse_lazy('tipo_de_actividad_index_view')
+
+    def post(self, request, pk,*args, **kwargs):
+        objeto = self.get_object()
+        objeto.delete()
+        messages.success(request,"La actividad se ha eliminado correctamente")
+        return redirect(self.success_url)
 
 @has_permission
 def tipo_de_actividad_buscar(request):
@@ -75,18 +84,7 @@ def tipo_de_actividad_buscar(request):
 
 ############################## PROFESOR ##################################
 
-@has_permission
-def profesor_index(request):
-    if request.GET:
-        sapellido = request.GET['apellido']
-        qs_profesor = Profesor.objects.filter(apellido=sapellido)
-    else:
-        qs_profesor = Profesor.objects.all()
-
-    return render(request,'administracion/profesor/index.html',{'qs_profesor':qs_profesor})
-
-
-class ProfesorIndexListView(ListView):
+class ProfesorIndexListView(LoginYSuperUsuarioMixin, ListView):
     model = Profesor
     context_object_name = 'qs_profesor'
     template_name = 'administracion/profesor/index.html'
@@ -96,28 +94,41 @@ class ProfesorIndexListView(ListView):
     def get_queryset(self):
         if (self.request.method == 'GET' and self.request.GET and self.request.GET['apellido']):
             sapellido = self.request.GET['apellido']
-            return Profesor.objects.filter(apellido=sapellido)
+            return Profesor.objects.filter(apellido=sapellido).order_by('id')
         else:
             return Profesor.objects.all()
 
 
-class ProfesorNuevoView(CreateView):
+class ProfesorNuevoView(LoginYSuperUsuarioMixin, CreateView):
     model = Profesor
     form_class = ProfesorForm
     template_name = 'administracion/profesor/nuevo.html'
     success_url = reverse_lazy('profesor_index_view')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'El profesor se ha registrado correctamente')
+        return super().form_valid(form)
 
-class ProfesorUpdateView(UpdateView):
+class ProfesorUpdateView(LoginYSuperUsuarioMixin, UpdateView):
     model = Profesor
     form_class = ProfesorForm
     template_name = 'administracion/profesor/editar.html'
     success_url = reverse_lazy('profesor_index_view')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'El profesor se ha editado correctamente')
+        return super().form_valid(form)
 
-class ProfesorDeleteView(DeleteView):
+class ProfesorDeleteView(LoginYSuperUsuarioMixin, DeleteView):
     model = Profesor
     template_name = 'administracion/profesor/eliminar.html'
     success_url = reverse_lazy('profesor_index_view')
+
+    def post(self, request, pk,*args, **kwargs):
+        objeto = self.get_object()
+        objeto.delete()
+        messages.success(request,"El profesor se ha eliminado correctamente")
+        return redirect(self.success_url)
 
 @has_permission
 def profesor_buscar(request):
@@ -125,18 +136,7 @@ def profesor_buscar(request):
 
 ############################## CLIENTE ##################################
 
-@has_permission
-def cliente_index(request):
-    if request.GET:
-        sapellido = request.GET['apellido']
-        qs_cliente = Cliente.objects.filter(apellido=sapellido)
-    else:
-        qs_cliente = Cliente.objects.all()
-
-    return render(request,'administracion/cliente/index.html',{'qs_cliente':qs_cliente})
-
-
-class ClienteIndexListView(ListView):
+class ClienteIndexListView(LoginYSuperUsuarioMixin, ListView):
     model = Cliente
     context_object_name = 'qs_cliente'
     template_name = 'administracion/cliente/index.html'
@@ -150,23 +150,36 @@ class ClienteIndexListView(ListView):
         else:
             return Cliente.objects.all()
 
-class ClienteNuevoView(CreateView):
+class ClienteNuevoView(LoginYSuperUsuarioMixin, CreateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'administracion/cliente/nuevo.html'
     success_url = reverse_lazy('cliente_index_view')
 
+    def form_valid(self, form):
+        messages.success(self.request, 'El cliente se ha registrado correctamente')
+        return super().form_valid(form)
 
-class ClienteUpdateView(UpdateView):
+class ClienteUpdateView(LoginYSuperUsuarioMixin, UpdateView):
     model = Cliente
     form_class = ClienteForm
     template_name = 'administracion/cliente/editar.html'
     success_url = reverse_lazy('cliente_index_view')
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'El cliente se ha editado correctamente')
+        return super().form_valid(form)
 
-class ClienteDeleteView(DeleteView):
+class ClienteDeleteView(LoginYSuperUsuarioMixin, DeleteView):
     model = Cliente
     template_name = 'administracion/cliente/eliminar.html'
     success_url = reverse_lazy('cliente_index_view')
+
+    def post(self, request, pk,*args, **kwargs):
+        objeto = self.get_object()
+        objeto.delete()
+        messages.success(request,"El cliente se ha eliminado correctamente")
+        return redirect(self.success_url)
 
 @has_permission
 def cliente_buscar(request):

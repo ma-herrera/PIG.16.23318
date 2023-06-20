@@ -52,7 +52,7 @@
             <div class="col-md-6">
               <label for="dni" class="form-label">DNI</label>
               <input type="number" class="form-control" id="documento" name="documento" value="{{ form.documento.value | default:'' }}"
-                maxlength="8" placeholder="Ingrese su DNI" required />
+              pattern="[0-9]{8}" placeholder="Ingrese su DNI" required />
               <div class="invalid-feedback">Por favor, escriba un número de DNI válido</div>
               <div class="valid-feedback">Correcto!</div>
               <div class="error">{{form.dni.errors}}</div>
@@ -69,6 +69,8 @@
 
             <div class="col-md-6">
               <label class="form-label">Contraseña</label>
+              <input id="check" type="checkbox" onclick="togglePassword()">
+                <label class="check-label">mostrar</label>
                 <input type="password" class="form-control" id="password1" name="password1" value="{{ form.password1.value | default:'' }}"
                  oninput="verificarFortaleza()" placeholder="Ingrese su contraseña" required/>
                 <span class="verificarPass"> 
@@ -102,5 +104,19 @@
       </div>
     </div>
   </div>
-  <script src={% static 'gym/js/sing_up.js' %}></script>
+  
+ <script>
+  /*------------- Mostrar contraseña -------------*/
+
+  function togglePassword() {
+    var password1 = document.getElementById("password1");
+    var check = document.getElementById("check");
+
+    if (check.checked) 
+      password1.type = "text";
+    else
+      password1.type = "password";
+  }
+
+ </script>
 {% endblock contenido %}

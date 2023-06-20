@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from gym.views import ListadoMensajes, EliminarMensaje, buscar_mensaje
 
 urlpatterns = [
     path ('', views.home_administracion, name="home_administracion"),
@@ -22,8 +23,7 @@ urlpatterns = [
     path('cliente/eliminar/<int:pk>', views.ClienteDeleteView.as_view(), name="cliente_eliminar_view"),
     path('cliente/buscar/', views.cliente_buscar,name='cliente_buscar'),
 
-    # path('tipo_de_actividad/', views.tipo_de_actividad_index,name='tipo_de_actividad_index'),
-    # path('tipo_de_actividad/nuevo/', views.tipo_de_actividad_nuevo,name='tipo_de_actividad_nuevo'),
-    # path('tipo_de_actividad/editar/<int:id_tipo_de_actividad>', views.tipo_de_actividad_editar,name='tipo_de_actividad_editar'),
-    # path('tipo_de_actividad/eliminar/<int:id_tipo_de_actividad>', views.tipo_de_actividad_eliminar,name='tipo_de_actividad_eliminar'),
+    path('mensajes', ListadoMensajes.as_view(), name="listar_mensajes"),
+    path('mensajes/eliminar/<int:pk>', EliminarMensaje.as_view(), name="eliminar_mensaje"),
+    path('mensajes/buscar/', buscar_mensaje,name='mensajes_buscar'),
 ]
