@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-
+from gym.views import ListadoMensajes, EliminarMensaje, buscar_mensaje
 urlpatterns = [
     path ('', views.home_administracion, name="home_administracion"),
     
@@ -15,6 +15,10 @@ urlpatterns = [
     path('profesor/editar/<int:pk>', views.ProfesorUpdateView.as_view(), name="profesor_editar_view"),
     path('profesor/eliminar/<int:pk>', views.ProfesorDeleteView.as_view(), name="profesor_eliminar_view"),
     path('profesor/buscar/', views.profesor_buscar,name='profesor_buscar'),
+
+    path('mensajes', ListadoMensajes.as_view(), name="listar_mensajes"),
+    path('mensajes/eliminar/<int:pk>', EliminarMensaje.as_view(), name="eliminar_mensaje"),
+    path('mensajes/buscar/', buscar_mensaje,name='mensajes_buscar'),
 
     # path('tipo_de_actividad/', views.tipo_de_actividad_index,name='tipo_de_actividad_index'),
     # path('tipo_de_actividad/nuevo/', views.tipo_de_actividad_nuevo,name='tipo_de_actividad_nuevo'),

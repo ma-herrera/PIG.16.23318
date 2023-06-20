@@ -10,7 +10,7 @@ from .models import Horario
 from .models import TipoDeActividad
 from .models import Actividad
 from .models import Inscripcion
-
+from gym.models import Contacto
 
 
 admin.site.register(TipoDocumento)
@@ -20,6 +20,7 @@ admin.site.register(Horario)
 admin.site.register(TipoDeActividad)
 admin.site.register(Actividad)
 admin.site.register(Inscripcion)
+admin.site.register(Contacto)
 
 class GymAdminSite(admin.AdminSite):
     site_header = 'Powerful Gym'
