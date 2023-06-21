@@ -1,7 +1,10 @@
 from django.urls import path
 from . import views
 from gym.views import ListadoMensajes, EliminarMensaje, buscar_mensaje
+
 urlpatterns = [
+
+   
     path ('', views.home_administracion, name="home_administracion"),
     
     path('tipo_de_actividad/', views.TipoDeActividadIndexListView.as_view(), name="tipo_de_actividad_index_view"),
