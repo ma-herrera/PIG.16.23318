@@ -11,6 +11,8 @@ from .models import TipoDeActividad
 from .models import Actividad
 from .models import Inscripcion
 from gym.models import Contacto
+from usuario.models import Usuario
+from django.contrib.auth.models import Permission
 
 
 
@@ -53,3 +55,5 @@ sitio_admin.register(Horario)
 sitio_admin.register(TipoDeActividad)
 sitio_admin.register(Inscripcion)
 sitio_admin.register(Contacto)
+sitio_admin.register(Usuario)
+sitio_admin.register(Permission)
